@@ -185,15 +185,17 @@ src/main/resources/sql/jiudianruzhu.sql
 | 用户注册 | http://localhost:8080/jiudianruzhu/register |
 | 后台管理 | http://localhost:8080/jiudianruzhu/admin/login |
 
-### Maven 插件启动（可选）
+### Maven 插件启动（推荐）
 
-项目已配置 `tomcat7-maven-plugin`，也可通过 Maven 命令直接启动：
+项目已配置 `tomcat7-maven-plugin`，可通过 Maven 命令直接启动，无需额外配置 Tomcat：
 
 ```bash
-mvn tomcat7:run
+mvn tomcat7:run -DskipTests
 ```
 
-启动后访问基路径为 `/jiudianzhuru`。
+启动后访问基路径为 `/jiudianzhuru`（注意与 Idea 部署时的 `/jiudianruzhu` 不同）：
+- 首页：http://localhost:8080/jiudianzhuru/rooms
+- 后台：http://localhost:8080/jiudianzhuru/admin/login
 
 ## 项目要点
 
