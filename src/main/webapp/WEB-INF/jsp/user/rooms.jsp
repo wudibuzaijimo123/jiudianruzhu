@@ -149,6 +149,9 @@
                     <c:set var="firstImage" value="${fn:split(rt.imageUrl, ',')[0]}" />
                     <img src="${empty firstImage ? 'https://images.unsplash.com/photo-1566073771259-6a8506099945' : firstImage}" alt="${rt.typeName}">
                     <span class="tag-self-run">随心金牌自营</span>
+                    <div class="card-mascot">
+                        <img src="${pageContext.request.contextPath}/static/img/homelander.png" alt="Mascot">
+                    </div>
                 </div>
                 <div class="hotel-content">
                     <div>

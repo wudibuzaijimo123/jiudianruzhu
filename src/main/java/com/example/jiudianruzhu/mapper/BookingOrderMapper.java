@@ -20,7 +20,7 @@ public interface BookingOrderMapper {
     @Insert("insert into booking_order(order_no,user_id,room_type_id,room_id,guest_name,guest_id_card,guest_phone,checkin_date,checkout_date,nights,total_amount,status,create_time) values(#{orderNo},#{userId},#{roomTypeId},#{roomId},#{guestName},#{guestIdCard},#{guestPhone},#{checkinDate},#{checkoutDate},#{nights},#{totalAmount},#{status},now())")
     int insert(BookingOrder order);
 
-    @Select("select count(*) from booking_order where user_id=#{userId} and status in ('BOOKED','CHECKED_IN') " +
+    @Select("select count(*) from booking_order where user_id=#{userId} and room_type_id=#{roomTypeId} and status in ('BOOKED','CHECKED_IN') " +
             "and not (checkout_date <= #{checkinDate} or checkin_date >= #{checkoutDate})")
     int countUserConflict(BookingOrder order);
 
