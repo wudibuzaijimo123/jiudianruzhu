@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status *)",
+      "Bash(mysql *)",
+      "Bash(mysqldump -uroot -p04022710 chenjiahao_qimo)"
+    ]
+  }
+}

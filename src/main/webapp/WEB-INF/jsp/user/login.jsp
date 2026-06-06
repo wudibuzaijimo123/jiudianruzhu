@@ -38,6 +38,7 @@
         </c:if>
         
         <form method="post">
+            <input type="hidden" name="redirect" value="${param.redirect}">
             <label>
                 <span>账号或绑定手机号</span>
                 <input name="account" placeholder="请输入您的用户名或手机号" required autocomplete="username">

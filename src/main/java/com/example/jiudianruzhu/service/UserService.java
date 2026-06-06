@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface UserService {
     User login(String account, String password);
+    User findByAccount(String account);
     boolean register(User user);
     void updateProfile(User user);
     void changePassword(Long id, String password);

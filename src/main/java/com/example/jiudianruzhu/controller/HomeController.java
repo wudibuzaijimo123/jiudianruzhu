@@ -62,13 +62,26 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String login(String account, String password, HttpSession session, Model model) {
-        User user = userService.login(account, password);
+    public String login(String account, String password,
+                        @RequestParam(required = false) String redirect,
+                        HttpSession session, Model model) {
+        User user = userService.findByAccount(account);
         if (user == null) {
-            model.addAttribute("msg", "账号、密码错误或账号已被禁用");
+            model.addAttribute("msg", "登录失败：该账号不存在");
+            return "user/login";
+        }
+        if (user.getStatus() == null || user.getStatus() != 1) {
+            model.addAttribute("msg", "登录失败：该账号已被禁用，请联系管理员");
+            return "user/login";
+        }
+        if (!user.getPassword().equals(password)) {
+            model.addAttribute("msg", "登录失败：密码错误");
             return "user/login";
         }
         session.setAttribute("loginUser", user);
+        if (redirect != null && !redirect.isEmpty()) {
+            return "redirect:" + redirect;
+        }
         return "redirect:/rooms";
     }
 
@@ -115,7 +128,15 @@ public class HomeController {
     public String bookPage(Long roomTypeId,
                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkinDate,
                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate checkoutDate,
+                           HttpSession session,
                            Model model) {
+        if (session.getAttribute("loginUser") == null) {
+            String target = "/book?roomTypeId=" + roomTypeId + "&checkinDate=" + checkinDate + "&checkoutDate=" + checkoutDate;
+            try {
+                target = java.net.URLEncoder.encode(target, "UTF-8");
+            } catch (Exception e) {}
+            return "redirect:/login?redirect=" + target;
+        }
         model.addAttribute("roomType", roomTypeService.findById(roomTypeId));
         model.addAttribute("checkinDate", checkinDate);
         model.addAttribute("checkoutDate", checkoutDate);

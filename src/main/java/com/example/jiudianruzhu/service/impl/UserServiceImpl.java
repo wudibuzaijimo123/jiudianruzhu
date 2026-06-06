@@ -21,6 +21,10 @@ public class UserServiceImpl implements UserService {
         return user.getPassword().equals(password) ? user : null;
     }
 
+    public User findByAccount(String account) {
+        return userMapper.findByAccount(account);
+    }
+
     public boolean register(User user) {
         if (userMapper.findDuplicate(user.getUsername(), user.getPhone()) != null) {
             return false;
