@@ -1,4 +1,4 @@
-# 酒店预定管理系统
+# 酒店预定管理系统1
 
 基于 SSM（Spring + Spring MVC + MyBatis）框架开发的酒店预定管理系统，实现酒店房型浏览与筛选、在线预定、订单管理、后台房型/房间维护、入住/退房处理等功能。
 
@@ -133,7 +133,7 @@ src/main/webapp/
 | Host | 127.0.0.1 |
 | Port | 3306 |
 | Username | root |
-| Password | 123456 |
+| Password | 输入你自己的数据库密码 |
 
 ### 核心数据表
 
