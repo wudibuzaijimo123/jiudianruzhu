@@ -1,5 +1,12 @@
 # 酒店预定管理系统
+
 基于 SSM（Spring + Spring MVC + MyBatis）框架开发的酒店预定管理系统，实现酒店房型查询、在线预定、订单管理、后台房型房间维护、入住退房处理等功能。
+
+## 项目信息
+
+- **项目名称**：ChenJiahaoQimo
+- **项目包名**：`com.chenjiahao.qimo`
+- **课程**：《Java EE 开发技术》期末作品
 
 ## 技术栈
 
@@ -41,7 +48,7 @@
 
 | 项目 | 值 |
 |------|-----|
-| 数据库名 | `jiudianruzhu` |
+| 数据库名 | `chenjiahao_qimo` |
 | Host | 127.0.0.1 |
 | Port | 3306 |
 | Username | root |
@@ -67,7 +74,7 @@ src/main/resources/sql/jiudianruzhu.sql
 
 | 角色 | 账号 | 密码 |
 |------|------|------|
-| 前台用户 | user | 123456 |
+| 前台用户 | chenjiahao | 123456 |
 | 后台管理员 | admin | 123456 |
 
 ## 运行方式
@@ -85,20 +92,20 @@ src/main/resources/sql/jiudianruzhu.sql
 2. 执行 `src/main/resources/sql/jiudianruzhu.sql` 初始化数据库。
 3. 使用 IntelliJ IDEA 打开项目，等待 Maven 依赖下载完成。
 4. 配置 Tomcat 本地服务器，以 `war exploded` 方式部署。
-5. 建议将 Application Context 设置为 `/jiudianruzhu`。
+5. 建议将 Application Context 设置为 `/ChenJiahaoQimo`。
 6. 启动 Tomcat。
 
 ### 访问地址
 
 | 页面 | 地址 |
 |------|------|
-| 首页 | http://localhost:8080/jiudianruzhu/rooms |
-| 后台登录 | http://localhost:8080/jiudianruzhu/admin/login |
+| 首页 | http://localhost:8080/ChenJiahaoQimo/rooms |
+| 后台登录 | http://localhost:8080/ChenJiahaoQimo/admin/login |
 
 ## 项目结构
 
 ```
-src/main/java/com/example/jiudianruzhu/
+src/main/java/com/chenjiahao/qimo/
 ├── controller/        # 控制层
 ├── entity/            # 实体类
 ├── mapper/            # MyBatis 数据访问层
