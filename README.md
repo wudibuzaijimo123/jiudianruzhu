@@ -1,4 +1,8 @@
-# 酒店预定管理系统1
+# 酒店预定管理系统
+
+```bash
+mvn tomcat7:run -DskipTests
+```
 
 基于 SSM（Spring + Spring MVC + MyBatis）框架开发的酒店预定管理系统，实现酒店房型浏览与筛选、在线预定、订单管理、后台房型/房间维护、入住/退房处理等功能。
 
