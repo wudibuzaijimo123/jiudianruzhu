@@ -1,5 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html>
 <head>
@@ -18,8 +19,40 @@
 
 <div class="wrap">
     <div class="detail-hero">
-        <div class="detail-image-container">
-            <img src="${empty roomType.imageUrl ? 'https://images.unsplash.com/photo-1566073771259-6a8506099945' : roomType.imageUrl}" alt="${roomType.typeName}">
+        <c:set var="imgs" value="${fn:split(roomType.imageUrl, ',')}" />
+        <div class="room-slider">
+            <div class="slider-container">
+                <div class="slider-track" id="sliderTrack">
+                    <c:choose>
+                        <c:when test="${not empty roomType.imageUrl}">
+                            <c:forEach items="${imgs}" var="img">
+                                <div class="slider-slide">
+                                    <img src="${img}" alt="${roomType.typeName}">
+                                </div>
+                            </c:forEach>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="slider-slide">
+                                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945" alt="${roomType.typeName}">
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
+                
+                <c:if test="${fn:length(imgs) > 1}">
+                    <button class="slider-btn prev" onclick="moveSlider(-1)">&#10094;</button>
+                    <button class="slider-btn next" onclick="moveSlider(1)">&#10095;</button>
+                    <div class="slider-counter" id="sliderCounter">1 / ${fn:length(imgs)}</div>
+                </c:if>
+            </div>
+            
+            <c:if test="${fn:length(imgs) > 1}">
+                <div class="slider-thumbnails" id="sliderThumbnails">
+                    <c:forEach items="${imgs}" var="img" varStatus="vs">
+                        <img src="${img}" class="${vs.index == 0 ? 'active' : ''}" onclick="setSlide(${vs.index})" alt="thumbnail">
+                    </c:forEach>
+                </div>
+            </c:if>
         </div>
         <div class="detail-body">
             <div class="detail-title">
@@ -90,6 +123,8 @@
     </div>
 </div>
 
+<jsp:include page="footer.jsp" />
+
 <div class="bottom-bar">
     <div style="display: flex; align-items: center; gap: 12px;">
         <div>
@@ -107,5 +142,63 @@
         立即预订房源
     </a>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var currentIdx = 0;
+        var track = document.getElementById("sliderTrack");
+        var counter = document.getElementById("sliderCounter");
+        var thumbs = document.getElementById("sliderThumbnails") ? document.getElementById("sliderThumbnails").querySelectorAll("img") : [];
+        var totalSlides = track ? track.querySelectorAll(".slider-slide").length : 0;
+        var autoTimer = null;
+
+        function updateSlider() {
+            if (!track) return;
+            track.style.transform = "translateX(-" + (currentIdx * 100) + "%)";
+            if (counter) {
+                counter.textContent = (currentIdx + 1) + " / " + totalSlides;
+            }
+            if (thumbs) {
+                thumbs.forEach(function(img, i) {
+                    if (i === currentIdx) {
+                        img.classList.add("active");
+                    } else {
+                        img.classList.remove("active");
+                    }
+                });
+            }
+        }
+
+        window.moveSlider = function(direction) {
+            if (totalSlides <= 1) return;
+            currentIdx = (currentIdx + direction + totalSlides) % totalSlides;
+            updateSlider();
+            resetTimer();
+        };
+
+        window.setSlide = function(index) {
+            currentIdx = index;
+            updateSlider();
+            resetTimer();
+        };
+
+        function startTimer() {
+            if (totalSlides > 1) {
+                autoTimer = setInterval(function() {
+                    currentIdx = (currentIdx + 1) % totalSlides;
+                    updateSlider();
+                }, 4000);
+            }
+        }
+
+        function resetTimer() {
+            if (autoTimer) {
+                clearInterval(autoTimer);
+            }
+            startTimer();
+        }
+
+        startTimer();
+    });
+</script>
 </body>
 </html>

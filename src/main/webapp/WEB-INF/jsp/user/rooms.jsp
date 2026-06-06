@@ -1,5 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!doctype html>
 <html>
 <head>
@@ -38,12 +39,21 @@
     </div>
 </div>
 
-<div class="hero-search">
-    <div class="slogan">
-        <h1>随心在手，想走就走</h1>
-        <p>✨ 预订精选自营酒店，尊享优质服务与安心入住体验</p>
-    </div>
-    <div class="wrap" style="padding: 0 18px;">
+<div class="hero-search" style="position: relative; background: none; box-shadow: none; overflow: hidden;">
+    <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1566073771259-6a8506099945'); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: opacity 1.2s ease-in-out; opacity: 1; z-index: 1;"></div>
+    <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1582719478250-c89cae4dc85b'); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: opacity 1.2s ease-in-out; opacity: 0; z-index: 1;"></div>
+    <div class="carousel-slide" style="background-image: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.55)), url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461'); position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; transition: opacity 1.2s ease-in-out; opacity: 0; z-index: 1;"></div>
+    
+    <div class="wrap" style="position: relative; z-index: 10; padding: 24px 18px 0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+            <div class="slogan" style="text-align: left; margin: 0; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.55); flex: 1; min-width: 280px;">
+                <h1 style="margin: 0; font-size: 32px; font-weight: 900;">随心在手，想走就走</h1>
+                <p style="margin: 8px 0 0; font-size: 16px; opacity: 0.95;">✨ 预订精选自营酒店，尊享优质服务与安心入住体验</p>
+            </div>
+            <div class="hero-mascot" style="flex-shrink: 0;">
+                <img src="${pageContext.request.contextPath}/static/img/homelander.png" alt="Mascot" style="width: 90px; height: auto; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35));">
+            </div>
+        </div>
         <div class="search-box-container">
             <form action="${pageContext.request.contextPath}/rooms" method="get">
                 <div class="search-line">
@@ -53,7 +63,8 @@
                     </div>
                     <button class="yellow" type="submit">开始搜索</button>
                 </div>
-                <div class="date-line">
+                
+                <div class="date-line" style="grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 16px;">
                     <label>
                         <span>📅 入住日期</span>
                         <input type="date" name="checkinDate" value="${checkinDate}">
@@ -63,17 +74,7 @@
                         <input type="date" name="checkoutDate" value="${checkoutDate}">
                     </label>
                     <label>
-                        <span>💡 排序推荐</span>
-                        <select name="sort" onchange="this.form.submit()">
-                            <option value="priceAsc" ${sort=='priceAsc'?'selected':''}>低价优先 💰</option>
-                            <option value="rating" ${sort=='rating'?'selected':''}>评分优先 ⭐</option>
-                            <option value="priceDesc" ${sort=='priceDesc'?'selected':''}>高价优先 💎</option>
-                        </select>
-                    </label>
-                </div>
-                <div class="filter-panel">
-                    <label>
-                        <span>房型分类</span>
+                        <span>🛌 房型分类</span>
                         <select name="category" onchange="this.form.submit()">
                             <option value="">全部房型</option>
                             <option value="大床房" ${category=='大床房'?'selected':''}>大床房</option>
@@ -84,10 +85,23 @@
                         </select>
                     </label>
                     <label>
-                        <span>单晚预算上限 (￥)</span>
+                        <span>💰 单晚预算上限</span>
                         <input type="number" name="maxPrice" value="${maxPrice}" placeholder="不限">
                     </label>
-                    <button class="btn gray" type="submit" style="height: 44px; margin-bottom: 0; font-weight: 700;">筛选房源</button>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px dashed var(--gray-200);">
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <span style="font-size: 13.5px; font-weight: 700; color: var(--gray-600);">💡 排序推荐：</span>
+                        <select name="sort" onchange="this.form.submit()" style="width: 160px; margin: 0; padding: 8px 12px; background: var(--gray-50); border: 1.5px solid var(--gray-200); border-radius: var(--radius-md); font-weight: 700; font-size: 14px;">
+                            <option value="priceAsc" ${sort=='priceAsc'?'selected':''}>低价优先 💰</option>
+                            <option value="rating" ${sort=='rating'?'selected':''}>评分优先 ⭐</option>
+                            <option value="priceDesc" ${sort=='priceDesc'?'selected':''}>高价优先 💎</option>
+                        </select>
+                    </div>
+                    <button class="btn" type="submit" style="padding: 10px 32px; background: var(--primary); font-weight: 800; font-size: 15px; border-radius: var(--radius-md);">
+                        立即筛选房源
+                    </button>
                 </div>
             </form>
         </div>
@@ -104,11 +118,36 @@
         <a class="chip ${category=='套房'?'active':''}" href="${pageContext.request.contextPath}/rooms?category=套房&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}">套房 👑</a>
     </div>
 
+    <!-- Service Guarantees to balance top-heavy layout -->
+    <div class="guarantees-grid">
+        <div class="guarantee-card">
+            <div class="guarantee-card-icon">🛡️</div>
+            <h4>安心房源</h4>
+            <p>100% 官方自营真实客房，严控消毒卫生指标，放心入住</p>
+        </div>
+        <div class="guarantee-card">
+            <div class="guarantee-card-icon">🥞</div>
+            <h4>精致就餐</h4>
+            <p>主厨精选营养早餐，唤醒每日元气，尊享星级服务</p>
+        </div>
+        <div class="guarantee-card">
+            <div class="guarantee-card-icon">⚡</div>
+            <h4>急速确认</h4>
+            <p>支付后自动流转分配物理房间号，到店免押金极速分房</p>
+        </div>
+        <div class="guarantee-card">
+            <div class="guarantee-card-icon">📞</div>
+            <h4>金牌服务</h4>
+            <p>7×24小时贴心在线旅客客服，有求必应，无忧售后</p>
+        </div>
+    </div>
+
     <div class="hotel-list">
         <c:forEach items="${roomTypes}" var="rt">
             <a class="hotel-card" href="${pageContext.request.contextPath}/room/detail?id=${rt.id}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}">
                 <div class="hotel-card-image-container">
-                    <img src="${empty rt.imageUrl ? 'https://images.unsplash.com/photo-1566073771259-6a8506099945' : rt.imageUrl}" alt="${rt.typeName}">
+                    <c:set var="firstImage" value="${fn:split(rt.imageUrl, ',')[0]}" />
+                    <img src="${empty firstImage ? 'https://images.unsplash.com/photo-1566073771259-6a8506099945' : firstImage}" alt="${rt.typeName}">
                     <span class="tag-self-run">随心金牌自营</span>
                 </div>
                 <div class="hotel-content">
@@ -168,5 +207,19 @@
         </c:forEach>
     </div>
 </div>
+<jsp:include page="footer.jsp" />
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var slides = document.querySelectorAll(".carousel-slide");
+        var currentIndex = 0;
+        if (slides && slides.length > 1) {
+            setInterval(function() {
+                slides[currentIndex].style.opacity = 0;
+                currentIndex = (currentIndex + 1) % slides.length;
+                slides[currentIndex].style.opacity = 1;
+            }, 4000);
+        }
+    });
+</script>
 </body>
 </html>
