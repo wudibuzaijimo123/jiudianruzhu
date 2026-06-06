@@ -2,5 +2,9 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
+<<<<<<< HEAD
+=======
+    <mapping directory="$PROJECT_DIR$/jiudianruzhu" vcs="Git" />
+>>>>>>> 9d50577 (Initial commit - 酒店预定管理系统)
   </component>
 </project>
