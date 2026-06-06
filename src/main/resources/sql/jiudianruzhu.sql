@@ -1,5 +1,5 @@
-create database if not exists chenjiahao_qimo default character set utf8mb4 collate utf8mb4_general_ci;
-use chenjiahao_qimo;
+create database if not exists jiudianruzhu default character set utf8mb4 collate utf8mb4_general_ci;
+use jiudianruzhu;
 
 drop table if exists booking_order;
 drop table if exists room;
@@ -82,7 +82,7 @@ create index idx_order_date on booking_order(checkin_date, checkout_date);
 create index idx_room_type_status on room_type(status);
 create index idx_room_status on room(status);
 
-insert into sys_admin(username,password,real_name,status) values ('admin','123456','陈佳豪管理员',1);
+insert into sys_admin(username,password,real_name,status) values ('admin','123123','admin',1);
 insert into sys_user(username,password,real_name,phone,id_card,status) values ('chenjiahao','123456','陈佳豪','13800000000','440100200001010000',1);
 
 insert into room_type(type_name,category,image_url,price,original_price,star_level,rating,distance_text,bed_type,capacity,breakfast,facilities,tags,promotion,description,status) values

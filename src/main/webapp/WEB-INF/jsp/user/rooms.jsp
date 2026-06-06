@@ -5,6 +5,7 @@
 <head>
     <title>随心出行 - 酒店预订</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+    <script src="${pageContext.request.contextPath}/static/js/click-effect.js"></script>
 </head>
 <body>
 <div class="top">

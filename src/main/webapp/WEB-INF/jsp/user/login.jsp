@@ -4,6 +4,7 @@
 <head>
     <title>用户登录 - 随心出行</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+    <script src="${pageContext.request.contextPath}/static/js/click-effect.js"></script>
 </head>
 <body class="auth-page">
 <div class="auth-shell">

@@ -4,6 +4,7 @@
 <head>
     <title>个人中心 - 随心出行</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+    <script src="${pageContext.request.contextPath}/static/js/click-effect.js"></script>
 </head>
 <body style="background: #f5f7fa;">
 <div class="top">

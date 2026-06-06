@@ -5,6 +5,7 @@
 <head>
     <title>我的行程订单 - 随心出行</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+    <script src="${pageContext.request.contextPath}/static/js/click-effect.js"></script>
 </head>
 <body>
 <div class="top">
