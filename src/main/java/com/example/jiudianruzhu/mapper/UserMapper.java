@@ -26,4 +26,10 @@ public interface UserMapper {
 
     @Update("update sys_user set status=#{status} where id=#{id}")
     int updateStatus(@Param("id") Long id, @Param("status") Integer status);
+
+    @Update("update sys_user set login_error_count=#{loginErrorCount}, lock_time=#{lockTime} where id=#{id}")
+    int updateLoginLock(User user);
+
+    @Update("update sys_user set login_error_count=0, lock_time=null where id=#{id}")
+    int clearLock(Long id);
 }

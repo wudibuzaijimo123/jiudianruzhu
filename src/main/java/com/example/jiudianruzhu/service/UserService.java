@@ -12,4 +12,5 @@ public interface UserService {
     void changePassword(Long id, String password);
     List<User> findAll();
     void updateStatus(Long id, Integer status);
+    void updateLoginLock(User user);
 }

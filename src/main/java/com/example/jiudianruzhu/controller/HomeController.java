@@ -74,10 +74,44 @@ public class HomeController {
             model.addAttribute("msg", "登录失败：该账号已被禁用，请联系管理员");
             return "user/login";
         }
-        if (!user.getPassword().equals(password)) {
-            model.addAttribute("msg", "登录失败：密码错误");
+
+        // 1. Check if user is locked
+        java.time.LocalDateTime now = java.time.LocalDateTime.now();
+        if (user.getLockTime() != null && now.isBefore(user.getLockTime())) {
+            long secondsLeft = java.time.Duration.between(now, user.getLockTime()).getSeconds();
+            long minutes = secondsLeft / 60;
+            long seconds = secondsLeft % 60;
+            String timeMsg = (minutes > 0 ? minutes + " 分钟 " : "") + seconds + " 秒";
+            model.addAttribute("msg", "登录失败：该账号已被锁定，请在 " + timeMsg + " 后重试");
             return "user/login";
         }
+
+        // 2. Validate password
+        if (!user.getPassword().equals(password)) {
+            int errors = user.getLoginErrorCount() == null ? 0 : user.getLoginErrorCount();
+            errors++;
+            user.setLoginErrorCount(errors);
+
+            if (errors % 5 == 0) {
+                // Lock account: duration increases progressively (5 mins, 10 mins, 15 mins...)
+                int lockMinutes = (errors / 5) * 5;
+                user.setLockTime(now.plusMinutes(lockMinutes));
+                userService.updateLoginLock(user);
+                model.addAttribute("msg", "登录失败：密码错误。您已连续输错 " + errors + " 次，该账号已被锁定 " + lockMinutes + " 分钟！");
+            } else {
+                user.setLockTime(null);
+                userService.updateLoginLock(user);
+                int attemptsLeft = 5 - (errors % 5);
+                model.addAttribute("msg", "登录失败：密码错误。您已连续输错 " + errors + " 次，再输错 " + attemptsLeft + " 次账号将被锁定！");
+            }
+            return "user/login";
+        }
+
+        // 3. Success: reset error count and lock time
+        user.setLoginErrorCount(0);
+        user.setLockTime(null);
+        userService.updateLoginLock(user);
+
         session.setAttribute("loginUser", user);
         if (redirect != null && !redirect.isEmpty()) {
             return "redirect:" + redirect;

@@ -13,6 +13,8 @@ public class User {
     private String phone;
     private String idCard;
     private Integer status;
+    private Integer loginErrorCount;
+    private LocalDateTime lockTime;
     private LocalDateTime createTime;
     private Integer consumeCount;
 }

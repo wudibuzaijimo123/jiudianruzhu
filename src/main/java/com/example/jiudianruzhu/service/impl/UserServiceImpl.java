@@ -47,5 +47,12 @@ public class UserServiceImpl implements UserService {
 
     public void updateStatus(Long id, Integer status) {
         userMapper.updateStatus(id, status);
+        if (status != null && status == 1) {
+            userMapper.clearLock(id);
+        }
+    }
+
+    public void updateLoginLock(User user) {
+        userMapper.updateLoginLock(user);
     }
 }

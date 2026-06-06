@@ -15,6 +15,8 @@ create table sys_user (
     phone varchar(20) not null unique,
     id_card varchar(30),
     status tinyint not null default 1,
+    login_error_count int not null default 0,
+    lock_time datetime default null,
     create_time datetime not null default current_timestamp
 );
 
