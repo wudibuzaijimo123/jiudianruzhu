@@ -32,9 +32,6 @@ public class BookingOrderServiceImpl implements BookingOrderService {
             return false;
         }
         order.setUserId(user.getId());
-        if (bookingOrderMapper.countUserConflict(order) > 0) {
-            return false;
-        }
         Room room = roomMapper.findAvailable(order.getRoomTypeId(), order.getCheckinDate(), order.getCheckoutDate());
         if (room == null) {
             return false;
