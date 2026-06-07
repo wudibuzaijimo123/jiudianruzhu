@@ -5,7 +5,7 @@
 <html>
 <head>
     <title>随心出行 - 房型详情</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/static/css/style.css?v=<%=System.currentTimeMillis()%>">
     <script src="${pageContext.request.contextPath}/static/js/click-effect.js"></script>
 </head>
 <body>
