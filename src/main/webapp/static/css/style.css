@@ -642,6 +642,7 @@ button:hover, .btn:hover {
 }
 
 .info-item {
+    position: relative;
     background: var(--gray-50);
     border: 1.5px solid var(--gray-200);
     border-radius: var(--radius-md);
@@ -649,6 +650,33 @@ button:hover, .btn:hover {
     transition: var(--transition);
     cursor: pointer;
     user-select: none;
+}
+
+.info-item::after {
+    content: "✓";
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 22px;
+    height: 22px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 950;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 2px 8px rgba(0, 134, 246, 0.4);
+    z-index: 10;
+}
+
+.info-item.selected::after {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .info-item:hover {
@@ -662,9 +690,19 @@ button:hover, .btn:hover {
     background: linear-gradient(135deg, #ffffff 0%, var(--primary-light) 100%);
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(0, 134, 246, 0.15), var(--shadow-sm);
+    transform: scale(1.02);
+    animation: selectedPulse 2s infinite ease-in-out;
 }
 
-
+@keyframes selectedPulse {
+    0%, 100% {
+        box-shadow: 0 0 0 3px rgba(0, 134, 246, 0.15), var(--shadow-sm);
+    }
+    50% {
+        box-shadow: 0 0 0 5px rgba(0, 134, 246, 0.35), 0 4px 15px rgba(0, 134, 246, 0.2);
+        border-color: var(--primary-hover);
+    }
+}
 .info-item strong {
     color: var(--gray-900);
     font-size: 15px;
