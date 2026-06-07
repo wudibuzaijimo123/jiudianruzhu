@@ -18,7 +18,7 @@ mvn tomcat7:run -DskipTests
 | 部署 | Tomcat 7+ / Tomcat 9 |
 | 其他 | Lombok, Jackson, SLF4J |
 
-## 项目结构1
+## 项目结构
 
 ```
 src/main/java/com/example/jiudianruzhu/
