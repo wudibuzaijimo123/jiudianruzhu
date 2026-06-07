@@ -184,7 +184,7 @@ public class HomeController {
             return "redirect:/login";
         }
         if (!bookingOrderService.create(order, user)) {
-            model.addAttribute("msg", "下单失败：库存不足或日期选择不正确，请更换入住时间或选择其他房型。");
+            model.addAttribute("msg", "下单失败：该房型在此时间段内已无空闲房间，库存不足。");
             model.addAttribute("roomType", roomTypeService.findById(order.getRoomTypeId()));
             model.addAttribute("checkinDate", order.getCheckinDate());
             model.addAttribute("checkoutDate", order.getCheckoutDate());

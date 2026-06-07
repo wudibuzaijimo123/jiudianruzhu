@@ -197,6 +197,13 @@
             startTimer();
         }
 
+        // Toggle selected state for info-item cards
+        document.querySelectorAll(".info-item").forEach(function(item) {
+            item.addEventListener("click", function() {
+                this.classList.toggle("selected");
+            });
+        });
+
         startTimer();
     });
 </script>

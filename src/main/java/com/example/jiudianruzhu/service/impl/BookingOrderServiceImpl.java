@@ -29,7 +29,8 @@ public class BookingOrderServiceImpl implements BookingOrderService {
     public boolean create(BookingOrder order, User user) {
         int nights = (int) ChronoUnit.DAYS.between(order.getCheckinDate(), order.getCheckoutDate());
         if (nights <= 0) {
-            return false;
+            order.setCheckoutDate(order.getCheckinDate().plusDays(1));
+            nights = 1;
         }
         order.setUserId(user.getId());
         Room room = roomMapper.findAvailable(order.getRoomTypeId(), order.getCheckinDate(), order.getCheckoutDate());
